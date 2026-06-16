@@ -4,105 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Random Password Generator</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: linear-gradient(135deg, #f4f4f4, #e0e0e0);
-        }
-        .container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            width: 300px;
-        }
-        input, button {
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-            width: 90%;
-        }
-        input {
-            background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
-            border: none;
-            outline: none;
-            text-align: center;
-        }
-        button {
-            background-color: #28a745;
-            color: white;
-            cursor: pointer;
-            border: none;
-            transition: 0.3s;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        #passwordDisplay {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 10px;
-            font-size: 18px;
-            font-weight: bold;
-            color: white;
-            background: linear-gradient(135deg, #008080, #4682B4);
-            padding: 10px;
-            border-radius: 6px;
-            width: 90%;
-            height: 15px;
-        }
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-          -webkit-appearance: none;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h2>Random Password Generator</h2>
-        <input type="number" id="length" min="1" placeholder="Enter length">
-        <button onclick="generatePassword()">Generate</button>
-        <p id="passwordDisplay">1234567890</p>
+        <h2>Password Generator</h2>
+        <input type="number" id="length" min="1" max="100" placeholder="Enter length (1 - 100)">
+        <button class="generate-pass-btn" id="generateBtn">Generate Password</button>
+        
+        <div class="password-wrapper">
+            <p id="passwordDisplay"></p>
+            <button id="copyBtn" class="copy-btn" title="Copy to clipboard">
+                <!-- Copy Icon -->
+                <svg id="copyIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                <!-- Check Icon (Hidden by default) -->
+                <svg id="checkIcon" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </button>
+        </div>
     </div>
-    <script>
-        function generatePassword() {
-            let length = document.getElementById('length').value,
-                characters = [['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'], 
-                              ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'], 
-                              ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], 
-                              ['!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', "\\", ']', '^', '_', '`', '{', '|', '}', '~']], 
-                password = "";
-            
-            if (isNaN(length) || length <= 0 || length >= 50) {
-              document.getElementById('passwordDisplay').innerText = "Enter a valid number!";
-              return;
-            }
-            for (let i = 0; i < length; i++) {
-              let row = Math.floor(Math.random()*4), 
-                  row_length = characters[row].length, 
-                  col = Math.floor(Math.random()*row_length), 
-                  matched = false;
-
-              for (let j = 0; (j < password.length && !matched); j++) {
-                if (characters[row][col] === password[j]) {
-                  matched = true;
-                  i--;
-                }
-              }
-              if (!matched) {
-                password += characters[row][col];
-              }
-            }
-            document.getElementById('passwordDisplay').innerText = password;
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
